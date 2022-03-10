@@ -26,6 +26,12 @@ This projects is about methods of payments which involves making a payment using
 docker-compose up
 ```
 
+### Run Tests
+
+```
+npm run test
+```
+
 ### Erros solved
 
 The mocha no supported the **import**, then to build the application is required install the @babel/register package and declare in package.json the command below:
