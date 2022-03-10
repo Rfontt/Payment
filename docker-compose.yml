@@ -1,0 +1,32 @@
+version: '3.1'
+services:
+  mongo_payment_db:
+    container_name: mongo_payment_db
+    image: mongo
+    ports:
+      - '27017:27017'
+  postgres_payment_db:
+    container_name: postgres_payment_db
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_USER=Rfontt
+      - POSTGRES_DB=payment
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data 
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    ports:
+      - '5432:5432'
+  api_payment:
+    container_name: api_payment
+    restart: always
+    build: .
+    ports:
+      - '80:3000'
+    links:
+      - mongo_payment_db
+      - postgres_payment_db
+    depends_on:
+      - mongo_payment_db
+      - postgres_payment_db
